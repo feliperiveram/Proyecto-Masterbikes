@@ -1,11 +1,29 @@
 <html lang="es-cl">
 <head>
     {% include 'modulos/head.html' %}
+    <link rel="stylesheet" href="static/css/login.css">
     <title>Masterbikes</title>
 </head>
 <body>
     {% include 'modulos/navbar.html' %}
-
+    <div class="formulario">
+        <h1>Inicio de sesión</h1>
+        <form method="post" onsubmit="event.preventDefault(); window.open('../Principal/Principal.html', '_blank');">
+            <div class="username">
+                <input type="text" required>
+                <label>Nombre de usuario</label>
+            </div>
+            <div class="contraseña">
+                <input type="password" required>
+                <label>Contraseña</label>
+            </div>
+            <div class="recordar">¿Olvidó su contraseña?</div>
+            <input type="submit" value="Iniciar">
+            <div class="registrarse">
+                Quiero hacer el <a href="#">registro</a>
+            </div>
+        </form>
+    </div>
     {% include 'modulos/footer.html' %}
     {% include 'modulos/modal.html' %}
 </body>
