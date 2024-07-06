@@ -26,6 +26,7 @@
     </div>
     <div class="contact section">
     <div class="container">
+        <div class="row properties-box" id="product-container"></div>
         <div class="row">
         <div class="col-lg-4 offset-lg-4">
             <div class="section-heading text-center">
@@ -101,4 +102,105 @@
     {% include 'modulos/modal.html' %}
 </body>
 {% include 'modulos/scripts.html' %}
+
+
+<script>
+    
+    async function obtenerProductos(url = '/api/productos') {
+  try {
+    const response = await fetch(url);
+    const result = await response.json();
+    console.log(result);
+    const productContainer = document.getElementById('product-container');
+
+    productContainer.innerHTML = '';
+
+    let row;
+
+    result.forEach((product, index) => {
+      if (index % 3 === 0) {
+        row = document.createElement('div');
+        row.classList.add('row');
+        productContainer.appendChild(row);
+      }
+
+      const col = document.createElement('div');
+      col.classList.add('col-lg-4', 'col-md-6');
+
+      const item = document.createElement('div');
+      item.classList.add('item');
+
+      const link = document.createElement('a');
+      link.href = "#";
+      const img = document.createElement('img');
+      if (product.img) {
+        img.src = `data:image/jpeg;base64,${product.img}`;
+      } else {
+        img.src = `/static/img/default/tp${product.id_tipo}.jpg`; // Imagen estática en caso de no tener imagen en el producto
+      }
+      img.alt = "";
+      link.appendChild(img);
+
+      const category = document.createElement('span');
+      category.classList.add('category');
+      category.textContent = product.id_tipo; 
+
+      const title = document.createElement('h4');
+      const titleLink = document.createElement('a');
+      titleLink.href = "property-details.html";
+      titleLink.textContent = product.nombre;
+      title.appendChild(titleLink);
+
+      const ul = document.createElement('ul');
+
+      const liRooms = document.createElement('li');
+      liRooms.textContent = `Stock: ${product.cantidad} \n Precio ${product.precio}`;
+      ul.appendChild(liRooms);
+
+      const liBathrooms = document.createElement('li');
+      liBathrooms.textContent = `Color: ${product.color}`;
+      ul.appendChild(liBathrooms);
+
+      const liArea = document.createElement('li');
+      liArea.textContent = `Modelo: ${product.modelo}`;
+      ul.appendChild(liArea);
+
+      const liFloors = document.createElement('li');
+      liFloors.textContent = `Garantía: ${product.garantia} Meses`;
+      ul.appendChild(liFloors);
+
+      const liParking = document.createElement('li');
+      liParking.textContent = `Peso: ${product.peso} KG`;
+      ul.appendChild(liParking);
+
+      const mainButton = document.createElement('div');
+      mainButton.classList.add('main-button');
+      const buttonLink = document.createElement('a');
+      buttonLink.href = "#";
+      buttonLink.textContent = "Agregar a tu carrito";
+      let enviar = JSON.stringify(product);
+      buttonLink.setAttribute('onclick', `agregarAlCarrito(${enviar})`);
+      mainButton.appendChild(buttonLink);
+
+      item.appendChild(link);
+      item.appendChild(category);
+      item.appendChild(title);
+      item.appendChild(ul);
+      item.appendChild(mainButton);
+      col.appendChild(item);
+      row.appendChild(col);
+      productContainer.appendChild(row);
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+    
+            $(document).ready(async function() {
+              await obtenerProductos();
+             });
+    
+      
+    </script>
 </html>

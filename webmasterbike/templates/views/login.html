@@ -1,14 +1,14 @@
 <html lang="es-cl">
 <head>
     {% include 'modulos/head.html' %}
-    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="/static/css/login.css">
     <title>Masterbikes</title>
 </head>
 <body>
     {% include 'modulos/navbar.html' %}
     <div class="formulario">
         <h1>Inicio de sesión</h1>
-        <form method="post" onsubmit="event.preventDefault(); window.open('../Principal/Principal.html', '_blank');">
+        <form method="post" onsubmit="event.preventDefault(); window.open('/admin', '_blank');">
             <div class="username">
                 <input type="text" required>
                 <label>Nombre de usuario</label>

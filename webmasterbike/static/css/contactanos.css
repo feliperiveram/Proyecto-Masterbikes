@@ -14,19 +14,19 @@ main{
   align-items: center;
   justify-content: center;
 }
-.container{
+.container2{
   width: 85%;
   background: #fff;
   border-radius: 6px;
   padding: 20px 60px 30px 40px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-.container .content{
+.container2 .content{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.container .content .left-side{
+.container2 .content .left-side{
   width: 25%;
   height: 100%;
   display: flex;
@@ -64,7 +64,7 @@ main{
   font-size: 14px;
   color: #afafb6;
 }
-.container .content .right-side{
+.container2 .content .right-side{
   width: 75%;
   margin-left: 75px;
 }
