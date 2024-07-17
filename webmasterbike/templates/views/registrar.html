@@ -1,13 +1,104 @@
 <html lang="es-cl">
 <head>
     {% include 'modulos/head.html' %}
+    {% load static %}
     <title>Masterbikes</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/sigin.css' %}">
+
 </head>
 <body>
     {% include 'modulos/navbar.html' %}
+
+    <div id="cont-formulario">
+        <h1>Formulario de Registro</h1>
+        <form action="/login" id="formulario">
+            <div class="form-group" id="grupo__nombre">
+                <label for="nombre" class="formulario__label">Nombre completo:</label>
+                <input type="text" class="form-control formulario__input" name="nombre" id="nombre" placeholder="Ingrese su nombre">
+                <div id="errorNombre">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__rut">
+                <label for="rut" class="formulario__label">RUT:</label>
+                <input type="text" class="form-control formulario__input" id="rut" placeholder="Ingrese su RUT">
+                <div id="errorRut">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__region">
+                <label for="region" class="formulario__label">Región:</label>
+                <select class="form-select regiones" aria-label="Default select example" id="regiones">
+                    <option value="0">Seleccione su región</option>
+                </select>
+                <div id="errorRegion">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__comuna">
+                <label for="comuna" class="formulario__label">Comuna:</label>
+                <select class="form-select comunas" aria-label="Default select example" id="comunas" disabled>
+                    <option value="0">Seleccione su comuna</option>
+                </select>
+            </div>
+            <div id="errorComuna">
+
+            </div>
+            <div class="form-group" id="grupo__direccion">
+                <label for="direccion" class="formulario__label">Dirección:</label>
+                <input type="text" class="form-control formulario__input" id="direccion" placeholder="Ingrese su dirección">
+                <div id="errorDireccion">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__numero">
+                <label for="numero" class="formulario__label">Número de Celular:</label>
+                <input type="text" class="form-control formulario__input" id="numero" placeholder="Ingrese su número de celular">
+                <div id="errorNumero">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__correo">
+                <label for="correo" class="formulario__label">Correo:</label>
+                <input type="text" class="form-control formulario__input" id="correo" placeholder="Ingrese su correo">
+                <div id="errorCorreo">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__contraseña">
+                <label for="contraseña" class="formulario__label">Contraseña:</label>
+                <input type="password" class="form-control formulario__input" id="contraseña" placeholder="Ingrese su contraseña">
+                <div id="errorContraseña">
+
+                </div>
+            </div>
+            <div class="form-group" id="grupo__verifContraseña">
+                <label for="verifContraseña" class="formulario__label">Reingrese la contraseña:</label>
+                <input type="password" class="form-control formulario__input" id="verifContraseña" placeholder="Ingrese nuevamente la contraseña">
+                <div id="errorVerifContra">
+
+                </div>
+            </div>
+            <div id="cont-botones">
+                <a href="/login"  class="btn btn-primary btn-registro">Registrarse</a>
+                <button type="reset" class="btn btn-primary" id="btn-limpiar">Limpiar campos</button>    
+            </div>
+        </form>
+    </div>  
 
     {% include 'modulos/footer.html' %}
     {% include 'modulos/modal.html' %}
 </body>
 {% include 'modulos/scripts.html' %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim.js/4.0.3/Slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="{% static 'js/validacionFormulario.js' %}"></script>
+<script src="{% static 'json/regionesComunas.json' %}../"></script>
+<script src="{% static 'js/cargarRegionesComunas.js' %}../"></script>
+
 </html>

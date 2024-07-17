@@ -8,7 +8,7 @@
     {% include 'modulos/navbar.html' %}
     <div class="formulario">
         <h1>Inicio de sesión</h1>
-        <form method="post" onsubmit="event.preventDefault(); window.open('/admin', '_blank');">
+        <form method="post" onsubmit="event.preventDefault(); window.open('/crud_productos/', '_blank');">
             <div class="username">
                 <input type="text" required>
                 <label>Nombre de usuario</label>
@@ -20,7 +20,7 @@
             <div class="recordar">¿Olvidó su contraseña?</div>
             <input type="submit" value="Iniciar">
             <div class="registrarse">
-                Quiero hacer el <a href="#">registro</a>
+                Quiero hacer el <a href="/register">registro</a>
             </div>
         </form>
     </div>

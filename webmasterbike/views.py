@@ -102,4 +102,4 @@ def login(request):
     return render(request,'views/login.html')
 
 def register(request):
-    return render(request,'views/register.html')
+    return render(request,'views/registrar.html')
