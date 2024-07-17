@@ -1,0 +1,134 @@
+<html lang="es-cl">
+<head>
+    {% include 'modulos/head.html' %}
+    <title>Masterbikes</title>
+</head>
+<body>
+    {% include 'modulos/navbar.html' %}
+    <h1>Productos</h1>
+    <ul id="productos-list"></ul>
+    <button onclick="mostrarFormularioCrear()">Añadir Producto</button>
+    
+    <div id="producto-form" style="display:none;">
+        <h2 id="form-title">Añadir Producto</h2>
+        <form id="form-producto" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="producto-id">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br>
+            <label for="id_tipo">Tipo:</label>
+            <input type="number" id="id_tipo" name="id_tipo" required><br>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" required><br>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" required><br>
+            <label for="peso">Peso:</label>
+            <input type="number" id="peso" name="peso"><br>
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color"><br>
+            <label for="garantia">Garantía:</label>
+            <input type="number" id="garantia" name="garantia" required><br>
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required><br>
+            <label for="img">Imagen:</label>
+            <input type="file" id="img" name="img"><br>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarProductos();
+        });
+    
+        function cargarProductos() {
+            fetch('/productos/')
+                .then(response => response.json())
+                .then(data => {
+                    const productosList = document.getElementById('productos-list');
+                    productosList.innerHTML = '';
+                    data.forEach(producto => {
+                        const li = document.createElement('li');
+                        li.textContent = `${producto.nombre} - ${producto.precio}`;
+                        li.onclick = () => editarProducto(producto.id);
+                        productosList.appendChild(li);
+    
+                        // Botón de eliminar
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Eliminar';
+                        deleteButton.onclick = (e) => {
+                            e.stopPropagation();
+                            eliminarProducto(producto.id);
+                        };
+                        li.appendChild(deleteButton);
+                    });
+                });
+        }
+    
+        function mostrarFormularioCrear() {
+            document.getElementById('producto-form').style.display = 'block';
+            document.getElementById('form-title').textContent = 'Añadir Producto';
+            document.getElementById('form-producto').reset();
+            document.getElementById('producto-id').value = '';
+        }
+    
+        function editarProducto(id) {
+            fetch(`/productos/${id}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('producto-id').value = data.id;
+                    document.getElementById('nombre').value = data.nombre;
+                    document.getElementById('id_tipo').value = data.id_tipo;
+                    document.getElementById('precio').value = data.precio;
+                    document.getElementById('cantidad').value = data.cantidad;
+                    document.getElementById('peso').value = data.peso;
+                    document.getElementById('color').value = data.color;
+                    document.getElementById('garantia').value = data.garantia;
+                    document.getElementById('modelo').value = data.modelo;
+                    document.getElementById('img').value = data.img;
+                    document.getElementById('form-title').textContent = 'Editar Producto';
+                    document.getElementById('producto-form').style.display = 'block';
+                });
+        }
+    
+        document.getElementById('form-producto').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const id = document.getElementById('producto-id').value;
+            const url = id ? `/productos/${id}/` : '/productos/';
+            const method = id ? 'PUT' : 'POST';
+    
+            fetch(url, {
+                method: method,
+                body: JSON.stringify(Object.fromEntries(formData.entries())),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Producto guardado con ID: ' + data.id);
+                cargarProductos();
+                document.getElementById('producto-form').style.display = 'none';
+            });
+        });
+    
+        function eliminarProducto(id) {
+            fetch(`/productos/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(() => {
+                alert('Producto eliminado');
+                cargarProductos();
+            });
+        }
+    </script>
+    {% include 'modulos/footer.html' %}
+    {% include 'modulos/modal.html' %}
+</body>
+{% include 'modulos/scripts.html' %}
+</html>

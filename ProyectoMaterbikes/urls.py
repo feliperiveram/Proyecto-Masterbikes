@@ -22,9 +22,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index,name="index"),
     path('contactanos', views.contactanos,name="contactanos"),
-    path('productos/', views.productos,name="productos"),
+    path('aproductos/', views.productos,name="productos"),
+    path('crud_productos/', views.productose,name="productos"),
     path('login/', views.login,name="login"),
     path('register/', views.register,name="register"),
     path('dashboard/', views.dashboard,name="dashboard"),
     path('api/productos/', views.ProductosView.as_view(), name='productos_view'),
+    path('productos/', views.ProductosView.as_view(), name='productos'),
+    path('productos/<int:id>/', views.ProductoDetailView.as_view(), name='producto_detail'),
 ]
